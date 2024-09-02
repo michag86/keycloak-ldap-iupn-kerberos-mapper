@@ -15,4 +15,4 @@ Set the name of your LDAP attribute under `LDAP attribute` and specify the custo
 Example:
 
 
-![Exmaple configuration](./assets/example.jpg)
+![Exmaple configuration](./images/example.jpg)
