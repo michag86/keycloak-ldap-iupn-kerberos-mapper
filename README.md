@@ -8,11 +8,4 @@ Download a release (*.jar file) that works with your Keycloak version from the l
 
 ## Configuration
 
-Create a new mapper for your user federation, select ldap-custom-enabled-value-mapper.
-
-Set the name of your LDAP attribute under `LDAP attribute` and specify the custom LDAP attribute value that will enable the user under `Enabled value`. When the user's LDAP attribute value matches the `Enabled value`, the user will be enabled. If it does not match, the user will remain disabled.
-
-Example:
-
-
-![Exmaple configuration](./images/example.jpg)
+Create a new mapper for your user federation, select ldap-iupn-kerberos-mapper.
