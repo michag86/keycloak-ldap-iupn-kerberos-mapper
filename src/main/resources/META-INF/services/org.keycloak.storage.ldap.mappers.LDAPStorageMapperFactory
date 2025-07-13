@@ -1,1 +1,1 @@
-org.wcss.keycloak.storage.ldap.mappers.LdapCustomEnabledValueMapperFactory
+org.wcss.keycloak.storage.ldap.mappers.LdapIupnKerberosMapperFactory

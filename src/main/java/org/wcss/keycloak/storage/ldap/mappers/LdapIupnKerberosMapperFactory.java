@@ -9,9 +9,9 @@ import org.keycloak.storage.ldap.mappers.AbstractLDAPStorageMapper;
 
 import java.util.List;
 
-public class LdapCustomEnabledValueMapperFactory extends AbstractLDAPStorageMapperFactory {
+public class LdapIupnKerberosMapperFactory extends AbstractLDAPStorageMapperFactory {
 
-    public static final String PROVIDER_ID = "ldap-custom-enabled-value-mapper";
+    public static final String PROVIDER_ID = "ldap-iupn-kerberos-mapper";
 
     @Override
     public String getId() {
@@ -26,19 +26,19 @@ public class LdapCustomEnabledValueMapperFactory extends AbstractLDAPStorageMapp
     @Override
     public List<ProviderConfigProperty> getConfigProperties() {
 	    ProviderConfigurationBuilder config = ProviderConfigurationBuilder.create()
-		    .property().name(LdapCustomEnabledValueMapper.LDAP_ATTRIBUTE)
+		    .property().name(LdapIupnKerberosMapper.LDAP_ATTRIBUTE)
 		    .label("LDAP attribute")
 		    .helpText("Name of mapped attribute on LDAP object. For example 'cn', 'uid', 'inetUserStatus' etc.")
 		    .type(ProviderConfigProperty.STRING_TYPE)
 		    .required(true)
 		    .add()
-		    .property().name(LdapCustomEnabledValueMapper.ENABLED_VALUE)
+		    .property().name(LdapIupnKerberosMapper.ENABLED_VALUE)
 		    .label("Enabled value")
 		    .helpText("Enabled value from LDAP. If the LDAP attribute equals this value the user would be enabled.")
 		    .type(ProviderConfigProperty.STRING_TYPE)
 		    .required(true)
 		    .add()
-	    	    .property().name(LdapCustomEnabledValueMapper.ALWAYS_READ_VALUE_FROM_LDAP)
+	    	    .property().name(LdapIupnKerberosMapper.ALWAYS_READ_VALUE_FROM_LDAP)
 		    .label("Always Read Value From LDAP")
                     .helpText("If on, then during reading of the LDAP attribute value will always used instead of the value from Keycloak DB")
                     .type(ProviderConfigProperty.BOOLEAN_TYPE).defaultValue("false").add();
@@ -48,7 +48,7 @@ public class LdapCustomEnabledValueMapperFactory extends AbstractLDAPStorageMapp
     }
     @Override
     protected AbstractLDAPStorageMapper createMapper(ComponentModel mapperModel, LDAPStorageProvider federationProvider) {
-        return new LdapCustomEnabledValueMapper(mapperModel, federationProvider);
+        return new LdapIupnKerberosMapper(mapperModel, federationProvider);
     }
 
 }

@@ -10,14 +10,14 @@ import org.keycloak.storage.ldap.idm.query.internal.LDAPQuery;
 import org.keycloak.storage.ldap.mappers.AbstractLDAPStorageMapper;
 import org.keycloak.models.utils.UserModelDelegate;
 
-public class LdapCustomEnabledValueMapper extends AbstractLDAPStorageMapper {
-	private static final Logger logger = Logger.getLogger(LdapCustomEnabledValueMapper.class);
+public class LdapIupnKerberosMapper extends AbstractLDAPStorageMapper {
+	private static final Logger logger = Logger.getLogger(LdapIupnKerberosMapper.class);
 
 	public static final String ALWAYS_READ_VALUE_FROM_LDAP = "always.read.value.from.ldap";
 	public static final String LDAP_ATTRIBUTE = "ldap.attribute";
 	public static final String ENABLED_VALUE = "enabled.ldap.value";
 
-	public LdapCustomEnabledValueMapper(ComponentModel mapperModel, LDAPStorageProvider ldapProvider) {
+	public LdapIupnKerberosMapper(ComponentModel mapperModel, LDAPStorageProvider ldapProvider) {
 		super(mapperModel, ldapProvider);
 	}
 
@@ -30,10 +30,10 @@ public class LdapCustomEnabledValueMapper extends AbstractLDAPStorageMapper {
 		boolean isEnabled = (ldapAttrValue != null && ldapAttrValue.equalsIgnoreCase(enabledValue));
 
 		if (ldapAttrValue == null) {
-			LdapCustomEnabledValueMapper.logger.warnf("Failed to enable user: %s, LDAP attribute value is null", user.getUsername());
+			LdapIupnKerberosMapper.logger.warnf("Failed to enable user: %s, LDAP attribute value is null", user.getUsername());
 		}
 
-		LdapCustomEnabledValueMapper.logger.debugf(
+		LdapIupnKerberosMapper.logger.debugf(
 				"User: %s is enabled: %s, " +
 				"LDAP attribute name: %s, " +
 				"LDAP attribute value: %s, " +

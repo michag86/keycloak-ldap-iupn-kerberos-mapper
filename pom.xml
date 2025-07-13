@@ -12,7 +12,7 @@
 	</parent>
 
 	<name>LDAP Custom Enabled Value Mapper</name>
-	<artifactId>ldap-custom-enabled-value-mapper</artifactId>
+	<artifactId>ldap-iupn-kerberos-mapper</artifactId>
 	<packaging>jar</packaging>
 
 	<description>
