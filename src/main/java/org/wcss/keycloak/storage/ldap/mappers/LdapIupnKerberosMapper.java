@@ -37,11 +37,9 @@ public class LdapIupnKerberosMapper extends AbstractLDAPStorageMapper {
                 "ldapDistinguishedName: %s" +
                 "combinedKerberosPrincipal: %s",
                 user.getUsername(), kerberosPrincipalAttribute, localKerberosPrincipal, ldapSamAccountName, ldapDistinguishedName, combinedKerberosPrincipal);
-            if (combinedKerberosPrincipal != null && localKerberosPrincipal != null) {
+            if (combinedKerberosPrincipal != null && !combinedKerberosPrincipal.equals(localKerberosPrincipal)) {
                 // update the Kerberos principal stored in DB as user's attribute if it doesn't match LDAP
-                if (!combinedKerberosPrincipal.equals(localKerberosPrincipal)) {
-                    user.setSingleAttribute(KERBEROS_PRINCIPAL, combinedKerberosPrincipal);
-                }
+                user.setSingleAttribute(KERBEROS_PRINCIPAL, combinedKerberosPrincipal);
             }
         }
     }
