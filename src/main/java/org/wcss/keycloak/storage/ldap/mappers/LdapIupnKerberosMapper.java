@@ -69,7 +69,7 @@ public class LdapIupnKerberosMapper extends AbstractLDAPStorageMapper {
             return null;
         }
         int index = distinguishedName.indexOf(",DC=");
-        if (index == -1) {
+        if (index != -1) {
             String domain = distinguishedName.substring(index + 4).replace(",DC=", ".").toUpperCase();
             return samAccountName + "@" + domain;
         } else { 
