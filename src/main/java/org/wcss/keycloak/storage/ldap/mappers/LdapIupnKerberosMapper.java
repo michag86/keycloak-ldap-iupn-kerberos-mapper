@@ -57,6 +57,10 @@ public class LdapIupnKerberosMapper extends AbstractLDAPStorageMapper {
 
     @Override
     public void beforeLDAPQuery(LDAPQuery query) {
+        String kerberosPrincipalAttribute = "sAMAccountName";
+        String kerberosDistinguishedNameAttribute = "distinguishedName";
+		query.addReturningLdapAttribute(kerberosPrincipalAttribute);
+		query.addReturningLdapAttribute(kerberosDistinguishedNameAttribute);
 
     }
 }
