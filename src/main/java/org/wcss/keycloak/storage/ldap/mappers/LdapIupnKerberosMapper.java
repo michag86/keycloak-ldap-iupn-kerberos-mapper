@@ -36,6 +36,8 @@ public class LdapIupnKerberosMapper extends AbstractLDAPStorageMapper {
                 String ldapDnsDomain = ldapDistinguishedNameDomainPart.replace(",DC=", ".");
                 String ldapDnsDomainUpperCase = ldapDnsDomain.toUpperCase();
                 String combinedKerberosPrincial = ldapSamAccountName + "@" + ldapDnsDomainUpperCase;
+            } else {
+                String combinedKerberosPrincial = null;
             }
             LdapIupnKerberosMapper.logger.debugf(
                 "User: %s, " +
@@ -45,7 +47,7 @@ public class LdapIupnKerberosMapper extends AbstractLDAPStorageMapper {
                 "ldapDistinguishedName: %s"+
                 "combinedKerberosPrincial: %s", 
                 user.getUsername(), kerberosPrincipalAttribute, localKerberosPrincipal, ldapSamAccountName, ldapDistinguishedName, combinedKerberosPrincial);
-            if (ldapSamAccountName != null && localKerberosPrincipal != null) {
+            if (combinedKerberosPrincial != null && localKerberosPrincipal != null) {
                 // update the Kerberos principal stored in DB as user's attribute if it doesn't match LDAP
                 if (!ldapSamAccountName.equals(localKerberosPrincipal)) {
                     user.setSingleAttribute(KERBEROS_PRINCIPAL, combinedKerberosPrincial);
