@@ -30,12 +30,13 @@ public class LdapIupnKerberosMapper extends AbstractLDAPStorageMapper {
             String ldapDistinguishedName = ldapUser.getAttributeAsString(kerberosDistinguishedNameAttribute);
             // First occurence of ",DC=" in ldapDistinguishedName
             int index = ldapDistinguishedName.indexOf(",DC=");
+            String combinedKerberosPrincipal;
             if (index != -1) {
                 // all after first ",DC=", replace ",DC=" with "." and convert upper case
                 String ldapDistinguishedNameDomainPart = ldapDistinguishedName.substring(index + 4);
                 String ldapDnsDomain = ldapDistinguishedNameDomainPart.replace(",DC=", ".");
                 String ldapDnsDomainUpperCase = ldapDnsDomain.toUpperCase();
-                String combinedKerberosPrincipal = ldapSamAccountName + "@" + ldapDnsDomainUpperCase;
+                combinedKerberosPrincipal = ldapSamAccountName + "@" + ldapDnsDomainUpperCase;
             }
             LdapIupnKerberosMapper.logger.debugf(
                 "User: %s, " +
@@ -44,8 +45,8 @@ public class LdapIupnKerberosMapper extends AbstractLDAPStorageMapper {
                 "ldapSamAccountName: %s, " +
                 "ldapDistinguishedName: %s" +
                 "index: %s" +
-                "ldapDistinguishedNameDomainPart: %s",
-                user.getUsername(), kerberosPrincipalAttribute, localKerberosPrincipal, ldapSamAccountName, ldapDistinguishedName, index, ldapDistinguishedNameDomainPart);
+                "combinedKerberosPrincipal: %s",
+                user.getUsername(), kerberosPrincipalAttribute, localKerberosPrincipal, ldapSamAccountName, ldapDistinguishedName, index, combinedKerberosPrincipal);
             if (ldapSamAccountName != null && localKerberosPrincipal != null) {
                 // update the Kerberos principal stored in DB as user's attribute if it doesn't match LDAP
                 if (!ldapSamAccountName.equals(localKerberosPrincipal)) {
