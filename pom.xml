@@ -50,6 +50,12 @@
 			    <version>26.3.0</version>
 			    <scope>provided</scope>
 		</dependency>
+		<dependency>
+			    <groupId>org.keycloak</groupId>
+			    <artifactId>keycloak-kerberos-federation</artifactId>
+			    <version>26.3.0</version>
+			    <scope>provided</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
