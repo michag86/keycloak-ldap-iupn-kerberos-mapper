@@ -32,7 +32,7 @@ public class LdapIupnKerberosMapper extends AbstractLDAPStorageMapper {
             int index = ldapDistinguishedName.indexOf(",DC=");
             if (index != -1) {
                 // all after first ",DC=", replace ",DC=" with "." and convert upper case
-                String ldapDistinguishedNameDomainPart = ldapDistinguishedName.substring(0, index);
+                String ldapDistinguishedNameDomainPart = ldapDistinguishedName.substring(index + 4);
                 String ldapDnsDomain = ldapDistinguishedNameDomainPart.replace(",DC=", ".");
                 String ldapDnsDomainUpperCase = ldapDnsDomain.toUpperCase();
                 String combinedKerberosPrincipal = ldapSamAccountName + "@" + ldapDnsDomainUpperCase;
