@@ -28,16 +28,7 @@ public class LdapIupnKerberosMapper extends AbstractLDAPStorageMapper {
             String localKerberosPrincipal = user.getFirstAttribute(KERBEROS_PRINCIPAL);
             String ldapSamAccountName = ldapUser.getAttributeAsString(kerberosPrincipalAttribute);
             String ldapDistinguishedName = ldapUser.getAttributeAsString(kerberosDistinguishedNameAttribute);
-            // First occurence of ",DC=" in ldapDistinguishedName
-            int index = ldapDistinguishedName.indexOf(",DC=");
-            String combinedKerberosPrincipal;
-            if (index != -1) {
-                // all after first ",DC=", replace ",DC=" with "." and convert upper case
-                String ldapDistinguishedNameDomainPart = ldapDistinguishedName.substring(index + 4);
-                String ldapDnsDomain = ldapDistinguishedNameDomainPart.replace(",DC=", ".");
-                String ldapDnsDomainUpperCase = ldapDnsDomain.toUpperCase();
-                combinedKerberosPrincipal = ldapSamAccountName + "@" + ldapDnsDomainUpperCase;
-            }
+            String combinedKerberosPrincipal = buildKerberosPrincipal(ldapSamAccountName, ldapDistinguishedName);
             LdapIupnKerberosMapper.logger.debugf(
                 "User: %s, " +
                 "kerberosPrincipalAttribute: %s, " +
@@ -73,5 +64,17 @@ public class LdapIupnKerberosMapper extends AbstractLDAPStorageMapper {
 		query.addReturningLdapAttribute(kerberosPrincipalAttribute);
 		query.addReturningLdapAttribute(kerberosDistinguishedNameAttribute);
 
+    }
+    private String buildKerberosPrincipal(String samAccountName, String distinguishedName) {
+        if (samAccountName == null || distinguishedName == null) {
+            return null;
+        }
+        int index = distinguishedName.indexOf(",DC=");
+        if (index == -1) {
+            String domain = distinguishedName.substring(index + 4).replace(",DC=", ".").toUpperCase();
+            return samAccountName + "@" + domain;
+        } else { 
+            return null;
+        }
     }
 }
