@@ -21,7 +21,6 @@ public class LdapIupnKerberosMapper extends AbstractLDAPStorageMapper {
 
     @Override
     public void onImportUserFromLDAP(LDAPObject ldapUser, UserModel user, RealmModel realm, boolean isCreate) {
-        LdapIupnKerberosMapper.logger.debugf("iupn start onImportUserFromLDAP");
         String kerberosPrincipalAttribute = "sAMAccountName";
         String kerberosDistinguishedNameAttribute = "distinguishedName";
 
@@ -29,17 +28,26 @@ public class LdapIupnKerberosMapper extends AbstractLDAPStorageMapper {
             String localKerberosPrincipal = user.getFirstAttribute(KERBEROS_PRINCIPAL);
             String ldapSamAccountName = ldapUser.getAttributeAsString(kerberosPrincipalAttribute);
             String ldapDistinguishedName = ldapUser.getAttributeAsString(kerberosDistinguishedNameAttribute);
+            // First occurence of ",DC=" in ldapDistinguishedName
+            int index = ldapDistinguishedName.indexOf(",DC=")
+            if (index != -1) {
+                String ldapDistinguishedNameDomainPart = DN.substring(0, index);
+                String ldapDnsDomain = ldapDistinguishedNameDomainPart.replace(",DC=", ".");
+                String ldapDnsDomainUpperCase = ldapDnsDomain.toUpperCase();
+                String combinedKerberosPrincial = ldapSamAccountName + "@" + ldapDnsDomainUpperCase;
+            }
             LdapIupnKerberosMapper.logger.debugf(
                 "User: %s, " +
                 "kerberosPrincipalAttribute: %s, " +
                 "localKerberosPrincipal: %s, " +
                 "ldapSamAccountName: %s, " +
-                "ldapDistinguishedName: %s", 
-                user.getUsername(), kerberosPrincipalAttribute, localKerberosPrincipal, ldapSamAccountName, ldapDistinguishedName);
+                "ldapDistinguishedName: %s"+
+                "combinedKerberosPrincial: %s", 
+                user.getUsername(), kerberosPrincipalAttribute, localKerberosPrincipal, ldapSamAccountName, ldapDistinguishedName, combinedKerberosPrincial);
             if (ldapSamAccountName != null && localKerberosPrincipal != null) {
                 // update the Kerberos principal stored in DB as user's attribute if it doesn't match LDAP
                 if (!ldapSamAccountName.equals(localKerberosPrincipal)) {
-                    user.setSingleAttribute(KERBEROS_PRINCIPAL, ldapSamAccountName);
+                    user.setSingleAttribute(KERBEROS_PRINCIPAL, combinedKerberosPrincial);
                 }
             }
         }
