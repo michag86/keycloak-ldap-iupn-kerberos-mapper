@@ -21,6 +21,7 @@ public class LdapIupnKerberosMapper extends AbstractLDAPStorageMapper {
 
     @Override
     public void onImportUserFromLDAP(LDAPObject ldapUser, UserModel user, RealmModel realm, boolean isCreate) {
+        LdapIupnKerberosMapper.logger.debugf("iupn start onImportUserFromLDAP");
         String kerberosPrincipalAttribute = "sAMAccountName";
         String kerberosDistinguishedNameAttribute = "distinguishedName";
 
@@ -29,7 +30,7 @@ public class LdapIupnKerberosMapper extends AbstractLDAPStorageMapper {
             String ldapSamAccountName = ldapUser.getAttributeAsString(kerberosPrincipalAttribute);
             String ldapDistinguishedName = ldapUser.getAttributeAsString(kerberosDistinguishedNameAttribute);
             LdapIupnKerberosMapper.logger.debugf(
-                "User: %s is enabled: %s, " +
+                "User: %s, " +
                 "localKerberosPrincipal: %s, " +
                 "ldapSamAccountName: %s, " +
                 "ldapDistinguishedName: %s", 
