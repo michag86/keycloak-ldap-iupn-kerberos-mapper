@@ -29,7 +29,7 @@ public class LdapIupnKerberosMapper extends AbstractLDAPStorageMapper {
             String ldapSamAccountName = ldapUser.getAttributeAsString(kerberosPrincipalAttribute);
             String ldapDistinguishedName = ldapUser.getAttributeAsString(kerberosDistinguishedNameAttribute);
             // First occurence of ",DC=" in ldapDistinguishedName
-            int index = ldapDistinguishedName.indexOf(",DC=")
+            int index = ldapDistinguishedName.indexOf(",DC=");
             if (index != -1) {
                 String ldapDistinguishedNameDomainPart = DN.substring(0, index);
                 String ldapDnsDomain = ldapDistinguishedNameDomainPart.replace(",DC=", ".");
