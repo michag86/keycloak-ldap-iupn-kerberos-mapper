@@ -3,6 +3,8 @@ package org.wcss.keycloak.storage.ldap.mappers;
 
 import org.keycloak.component.ComponentModel;
 import org.keycloak.storage.ldap.LDAPStorageProvider;
+import org.keycloak.storage.ldap.mappers.AbstractLDAPStorageMapperFactory;
+import org.keycloak.storage.ldap.mappers.AbstractLDAPStorageMapper;
 
 public class LdapIupnKerberosMapperFactory extends AbstractLDAPStorageMapperFactory {
 
